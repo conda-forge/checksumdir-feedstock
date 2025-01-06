@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/checksumdir-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/checksumdir-{{ version }}.tar.gz
   sha256: 10bfd7518da5a14b0e9ac03e9ad105f0e70f58bba52b6e9aa2f21a3f73c7b5a8
 
 build:
@@ -14,14 +14,14 @@ build:
     - checksumdir = checksumdir.cli:main
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.6,<4.0
+    - python {{ python_min }}
   run:
-    - python >=3.6,<4.0
+    - python >={{ python_min }},<4.0
 
 test:
   imports:
@@ -31,6 +31,7 @@ test:
     - checksumdir --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: http://github.com/cakepietoast/checksumdir
